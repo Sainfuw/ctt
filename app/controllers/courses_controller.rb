@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
   def show
 
     # Create room
-    #response = Ov.request("api/sessions", "post", {customSessionId: @course.name,})
+    # response = Ov.request("api/sessions", "post", {customSessionId: @course.name,})
 
     # Subscribe to room
     response = Ov.request("api/tokens", "post", {session: @course.name})
