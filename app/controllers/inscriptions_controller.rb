@@ -3,6 +3,20 @@ class InscriptionsController < ApplicationController
     @inscription = Inscription.new
   end
 
+  def courses
+    @courses = Inscription.where(user_id: current_user.id)
+  end
+
+  def ayudantes
+    @curso = Inscription.where(course_id: params[:id])
+    @ayudantes = @curso.where(kind: 'Ayudante')
+  end
+
+  def alumnos
+    @curso = Inscription.where(course_id: params[:id])
+    @alumnos = @curso.where(kind: 'Alumno')
+  end
+
   def create
     @inscription = Inscription.new(inscription_params)
     @inscription.kind = 'Alumno'

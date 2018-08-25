@@ -9393,3 +9393,7 @@ Completed 200 OK in 58ms (Views: 54.9ms | ActiveRecord: 0.2ms)
 >>>>>>> origin
 
 
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mInscription Load (0.4ms)[0m  [1m[34mSELECT  "inscriptions".* FROM "inscriptions" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mInscription Load (0.5ms)[0m  [1m[34mSELECT  "inscriptions".* FROM "inscriptions" WHERE "inscriptions"."course_id" = ? LIMIT ?[0m  [["course_id", 2], ["LIMIT", 11]]

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'inscriptions/courses'
+  get 'inscription/:id/ayudantes', to: 'inscriptions#ayudantes', as: 'inscription_ayudantes'
+  get 'inscription/:id/alumnos', to: 'inscriptions#alumnos', as: 'inscription_alumnos'
   resources :inscriptions, only: [:new, :create]
   namespace :admins do
     resources :users
