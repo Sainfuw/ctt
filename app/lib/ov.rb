@@ -1,10 +1,10 @@
 class Ov
   def self.request(endpoint = "api/tokens", method = "POST", body = {})
-    base_url = "https://45.56.120.113:4443/"
+    base_url = "https://desafiostreaming.tk:4443/"
     url = URI(base_url + endpoint)
 
     http = Net::HTTP.new(url.host, url.port)
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    #http.verify_mode = OpenSSL::SSL::VERIFY_NONE use this when using local openvidu
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(url)
@@ -13,9 +13,10 @@ class Ov
     request.body = body.to_json
 
     response = http.request(request)
-    puts response
-    puts response.read_body
-
-    @token = JSON.parse(response.read_body)
+    if response.code == "200" 
+      @token = JSON.parse(response.read_body)
+    else
+      {error: response.code}
+    end
   end
 end

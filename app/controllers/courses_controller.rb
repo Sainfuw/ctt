@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :init_transmission]
 
   # GET /courses
   # GET /courses.json
@@ -7,19 +7,20 @@ class CoursesController < ApplicationController
     @courses = Course.all
   end
 
+  def init_transmission
+    response = Ov.request("api/sessions", "post", {customSessionId: @course.name})
+    redirect_to courses_path
+  end
   # GET /courses/1
   # GET /courses/1.json
   def show
-
-    # Create room
-    # response = Ov.request("api/sessions", "post", {customSessionId: @course.name,})
-
     # Subscribe to room
     response = Ov.request("api/tokens", "post", {session: @course.name})
-    @token = response['token']
-    # Get Token ID
-#.split("&")[1].split("=")[1]
-
+    if response.key?(:error)
+      redirect_to courses_path, alert: "error #{response[:error]}"
+    else
+      @token = response['token']
+    end
 
   end
 
@@ -36,6 +37,7 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
+    # Create room
 
     respond_to do |format|
       if @course.save
