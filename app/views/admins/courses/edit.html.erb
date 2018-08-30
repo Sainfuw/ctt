@@ -1,32 +1,43 @@
-<h1>Editing Course</h1>
+<div class="jumbotron-fluid">
+  <div class="container">
+    <h1>Editing Course</h1>
 
-<%= form_with(model: @course, url: admins_course_path, local: true) do |form| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this @course from being saved:</h2>
+    <%= form_with(model: @course, url: admins_course_path, local: true) do |form| %>
+      <% if @course.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@course.errors.count, "error") %> prohibited this @course from being saved:</h2>
 
-      <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @course.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <form class="" >
+        <div class="field">
+          <label for="formGroupExampleInput">
+            <%= form.label :name %>
+          </label>
+          <input type="text" class="form-control" id="formGroupExampleInput"<%= form.text_field :name, id: :course_name %>
+        </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :course_name %>
+        <div class="field">
+          <label for="formGroupExampleInput">
+            <%= form.label :category %>
+          </label>
+          <input type="text" class="form-control" id="formGroupExampleInput"<%= form.text_field :category, id: :course_category %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit %>
+        </div>
+      <% end %>
+      <br>
+      <button type="button" class="btn btn-outline-info">
+        <%= link_to 'Show', admins_course_path(@course) %> |
+        <%= link_to 'Back', admins_courses_path %>
+      </button>
+    </form>
   </div>
-
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.text_field :category, id: :course_category %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Show', admins_course_path(@course) %> |
-<%= link_to 'Back', admins_courses_path %>
+</div>

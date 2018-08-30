@@ -10,7 +10,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="<%= root_path %>">Clases <span class="sr-only">(current)</span></a>
       <li class="nav-item active">
-          <a class="nav-link" href="#">Equipo <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="equipo_index_path">Equipo <span class="sr-only">(current)</span></a>
 
     </ul>
     <ul class="navbar-nav">
@@ -19,6 +19,7 @@
           <% if user_signed_in? %>
             <%= current_user.email %>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="<%= edit_user_password_path %>">Perfil</a>
               <a class="dropdown-item" href="<%= inscriptions_courses_path %>">Mis Cursos</a>
               <a class="dropdown-item" href="#">Mis Notas</a>
               <div class="dropdown-divider"></div>
