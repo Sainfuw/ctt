@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-md-6 ">
-    <table class="table">
-      <thead>
+  <div class="col-md-6">
+    <table class="table table-bordered">
+      <thead class="thead-light">
         <tr>
           <th>Name</th>
           <th>Asignatura</th>
-          <th colspan="3"></th>
+          <th colspan="4"></th>
         </tr>
       </thead>
 
@@ -14,18 +14,54 @@
           <tr>
             <td><%= course.name %></td>
             <td><%= course.category %></td>
-            <td> <%= link_to 'Transmitir', init_transmission_course_path(course) %> </td>
-            <td><%= link_to 'Show', course %></td>
-            <td><%= link_to 'Edit', edit_course_path(course) %></td>
-            <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+
+                <button type="button" class="btn btn-outline-primary">
+                  <%= link_to 'Transmitir', init_transmission_course_path(course) %>
+                </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-success">
+                <%= link_to 'Show', course %>
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-success">
+                <%= link_to 'Edit', edit_course_path(course) %>
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-danger">
+                <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </button>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
 
     <br>
-
-    <%= link_to 'New Course', new_admins_course_path %>
+    <button type="button" class="btn btn-outline-primary">
+       <%= link_to 'New Course', new_admins_course_path %>
+    </button>
+  </div>
+  <div class="col-md-6">
+    <div class="media">
+      <img class="align-self-end mr-3" src="https://78.media.tumblr.com/avatar_fb5b06218ae8_128.gif" alt="Generic placeholder image">
+      <div class="media-body">
+        <h5 class="mt-0">Bottom-aligned media</h5>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <p class="mb-0">Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </div>
+    </div>
+    <br>
+    <div class="media">
+      <img class="align-self-end mr-3" src="https://a.wattpad.com/useravatar/Mrotterv2.128.486884.jpg" alt="Generic placeholder image">
+      <div class="media-body">
+        <h5 class="mt-0">Bottom-aligned media</h5>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <p class="mb-0">Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </div>
+    </div>
   </div>
 </div>
-

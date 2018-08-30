@@ -10,18 +10,23 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :course_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.text_field :category, id: :course_category %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+  <form class="" >
+    <div class="field">
+      <label for="formGroupExampleInput">
+        <%= form.label :name %>
+      </label>
+      <input type="text" class="form-control" id="formGroupExampleInput" <%= form.text_field :name, id: :course_name %>
+    </div>
+    <br>
+    <div class="field">
+      <label for="formGroupExampleInput">
+        <%= form.label :category %>
+      </label>
+      <input type="text" class="form-control" id="formGroupExampleInput"  <%= form.text_field :category, id: :course_category %>
+    </div>
+    <br>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+    <% end %>
+  </form>
