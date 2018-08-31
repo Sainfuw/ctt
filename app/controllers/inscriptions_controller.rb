@@ -1,7 +1,5 @@
 class InscriptionsController < ApplicationController
-  def new
-    @inscription = Inscription.new
-  end
+  before_action :authenticate_user!
 
   def courses
     @courses = Inscription.where(user_id: current_user.id)
@@ -17,16 +15,8 @@ class InscriptionsController < ApplicationController
     @alumnos = @curso.where(kind: 'Alumno')
   end
 
-  def create
-    @inscription = Inscription.new(inscription_params)
-    @inscription.kind = 'Alumno'
-    @inscription.user_id = current_user.id
-    @inscription.save
-    redirect_to root_path, alert: 'Registro al curso completo'
-  end
-
-  private
-  def inscription_params
-    params.require(:inscription).permit(:course_id)
+  def new
+    @inscription = Inscription.create(user_id: current_user.id, course_id: params[:id], kind: "Alumno")
+    redirect_to root_path, notice: 'Registro al curso completo'
   end
 end

@@ -1,5 +1,6 @@
 class Admins::InscriptionsController < ApplicationController
   before_action :set_inscription, only: [:edit, :update]
+  before_action :admin?
 
   def index
     @inscriptions = Inscription.all

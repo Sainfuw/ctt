@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :init_transmission]
+  before_action :set_course, only: [:show, :info, :init_transmission]
+  before_action :authenticate_user!, except: :home
 
   # GET /courses
   # GET /courses.json
@@ -50,38 +51,24 @@ class CoursesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /courses/1
-  # PATCH/PUT /courses/1.json
-  def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
-        format.json { render :show, status: :ok, location: @course }
-      else
-        format.html { render :edit }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
-    end
+
+  def home
   end
 
-  # DELETE /courses/1
-  # DELETE /courses/1.json
-  def destroy
-    @course.destroy
-    respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  def info
+    @list_course = Inscription.where("course_id = ?", @course.id)
+
+    # @profesor_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Profesor")
+    # @profesor = User.find(@profesor_ins[0].user_id)
+    # @ayudantes_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Ayudante")
+    # @ayudantes = @ayudantes_ins.map { |a| User.find(a.user_id) }
+    # @alumnos_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Alumno")
+    # @alumnos = @alumnos_ins.map { |a| User.find(a.user_id) }
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def course_params
-      params.require(:course).permit(:name, :category)
-    end
+  def set_course
+    @course = Course.find(params[:id])
+  end
 end
