@@ -1,32 +1,46 @@
 <h1>Editing Course</h1>
+<div class="contariner air">
+  <div class="row">
+    <div class="col-md-3 mx-auto">
+      <%= form_with(model: @course, url: admins_course_path, local: true) do |form| %>
+        <% if @course.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@course.errors.count, "error") %> prohibited this @course from being saved:</h2>
 
-<%= form_with(model: @course, url: admins_course_path, local: true) do |form| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this @course from being saved:</h2>
+            <ul>
+            <% @course.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-      <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <div class="field">
+          <%= form.label :name %>
+          <%= form.text_field :name, id: :course_name, class: 'form-control' %>
+        </div>
+
+        <div class="field">
+          <%= form.label :category %>
+          <%= form.text_field :category, id: :course_category, class: 'form-control' %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit 'Actualizar informacion', class: 'btn btn-primary btn-block mt-5' %>
+        </div>
       <% end %>
-      </ul>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :course_name %>
   </div>
-
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.text_field :category, id: :course_category %>
+  <div class="row">
+    <div class="col-md-3 mx-auto">
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <%= link_to 'Show', admins_course_path(@course), class: 'btn btn-primary btn-block' %>
+        </div>
+        <div class="col-md-6">
+          <%= link_to 'Back', admins_courses_path, class: 'btn btn-primary btn-block' %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Show', admins_course_path(@course) %> |
-<%= link_to 'Back', admins_courses_path %>
+</div>

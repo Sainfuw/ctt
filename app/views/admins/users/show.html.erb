@@ -1,14 +1,22 @@
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= @user.email %></td>
-    </tr>
-  </tbody>
-</table>
-<%= link_to 'Edit', edit_admins_user_path(@user) %> |
-<%= link_to 'Back', admins_users_path %>
+<div class="container air">
+  <table class="table table-bordered mx-auto">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Usuario</th>
+        <th>Correo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @user.firstname %></td>
+        <td><%= @user.lastname %></td>
+        <td><%= @user.username %></td>
+        <td><%= @user.email %></td>
+      </tr>
+    </tbody>
+  </table>
+  <%= link_to 'Edit', edit_admins_user_path(@user), class: 'btn btn-primary' %>
+  <%= link_to 'Back', admins_users_path, class: 'btn btn-primary' %>
+</div>

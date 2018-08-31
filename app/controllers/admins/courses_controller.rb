@@ -1,26 +1,11 @@
 class Admins::CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :admin?
 
   # GET /courses
   # GET /courses.json
   def index
     @courses = Course.all
-  end
-
-  # GET /courses/1
-  # GET /courses/1.json
-  def show
-
-    # Create room
-    #response = Ov.request("api/sessions", "post", {customSessionId: @course.name,})
-
-    # Subscribe to room
-    response = Ov.request("api/tokens", "post", {session: @course.name})
-    @token = response['token']
-    # Get Token ID
-#.split("&")[1].split("=")[1]
-
-
   end
 
   # GET /courses/new
@@ -32,11 +17,14 @@ class Admins::CoursesController < ApplicationController
   def edit
   end
 
+  def show
+    @list_course = Inscription.where("course_id = ?", @course.id)
+  end
+
   # POST /courses
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-
     respond_to do |format|
       if @course.save
         format.html { redirect_to admins_courses_path, notice: 'Course was successfully created.' }
@@ -46,6 +34,7 @@ class Admins::CoursesController < ApplicationController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
+    Inscription.create(user_id: params[:course][:profesor], course_id: @course.id, kind: "Profesor")
   end
 
   # PATCH/PUT /courses/1

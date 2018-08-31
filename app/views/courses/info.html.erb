@@ -1,0 +1,8 @@
+<div class="container air">
+  <%= @course.name %><br>
+  <%= @course.category %><br>
+  <%= @course.created_at %><br>
+  <% @list_course.each do |user| %>
+    <%= User.find(user.user_id).email %>-<%= user.kind %><br>
+  <% end %>
+</div>
