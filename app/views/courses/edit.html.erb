@@ -1,0 +1,11 @@
+  <div class="jumbotron-fluid">
+    <div class="container">
+      <h1>Editing Course</h1>
+      <%= render 'form', course: @course %>
+      <br>
+      <button type="button" class="btn btn-outline-secondary">
+        <%= link_to 'Show', @course %> |
+        <%= link_to 'Back', courses_path %>
+      </button>
+    </div>
+  </div>
