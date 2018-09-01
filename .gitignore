@@ -5,3 +5,7 @@ log/development.log
 .byebug_history
 tmp/cache/*
 tmp/pids/*
+
+db/test.sqlite3
+
+log/*
