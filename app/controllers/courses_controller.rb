@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
   end
 
   def init_transmission
-    response = Ov.request("api/sessions", "post", {customSessionId: @course.name})
+    response = Ov.request("api/sessions", "post", {customSessionId: @course.slug})
     redirect_to courses_path
   end
   # GET /courses/1
@@ -19,9 +19,9 @@ class CoursesController < ApplicationController
     @teacher = Inscription
                 .where(user: current_user, 
                     course: @course, 
-                    kind: "Profesor"
+                    kind: :teacher
                   ).any?
-    response = Ov.request("api/tokens", "post", {session: @course.name})
+    response = Ov.request("api/tokens", "post", {session: @course.slug})
     if response.key?(:error)
       redirect_to courses_path, alert: "error #{response[:error]}"
     else
