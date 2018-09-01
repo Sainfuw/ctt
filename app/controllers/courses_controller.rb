@@ -16,6 +16,11 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     # Subscribe to room
+    @teacher = Inscription
+                .where(user: current_user, 
+                    course: @course, 
+                    kind: "Profesor"
+                  ).any?
     response = Ov.request("api/tokens", "post", {session: @course.name})
     if response.key?(:error)
       redirect_to courses_path, alert: "error #{response[:error]}"
