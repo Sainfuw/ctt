@@ -2,3 +2,7 @@ db/development.sqlite3
 .byebug_history
 tmp/cache/*
 tmp/pids/*
+
+db/test.sqlite3
+
+log/*
