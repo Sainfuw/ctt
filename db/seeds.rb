@@ -6,8 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-available_kinds = Inscription::KINDS.keys
-
 
 ### Courses - START ###
 
@@ -52,49 +50,49 @@ users << User.create!({
 inscriptions = []
 ### Inscription to first course ###
 inscriptions << Inscription.create!({
-                kind: available_kinds[0].to_s,
+                kind: Inscription.kinds["teacher"],
                 user_id: users[0].id,
                 course_id: courses[0].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[1].to_s,
+                kind: Inscription.kinds["student"],
                 user_id: users[1].id,
                 course_id: courses[0].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[2].to_s,
+                kind: Inscription.kinds["assistant"],
                 user_id: users[2].id,
                 course_id: courses[0].id
               })
 ### Inscription to second course ###
 inscriptions << Inscription.create!({
-                kind: available_kinds[2].to_s,
+                kind: Inscription.kinds["assistant"],
                 user_id: users[0].id,
                 course_id: courses[1].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[0].to_s,
+                kind: Inscription.kinds["teacher"],
                 user_id: users[1].id,
                 course_id: courses[1].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[1].to_s,
+                kind: Inscription.kinds["student"],
                 user_id: users[2].id,
                 course_id: courses[1].id
               })
 ### Inscription to third course ###
 inscriptions << Inscription.create!({
-                kind: available_kinds[2].to_s,
+                kind: Inscription.kinds["assistant"],
                 user_id: users[0].id,
                 course_id: courses[2].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[1].to_s,
+                kind: Inscription.kinds["student"],
                 user_id: users[1].id,
                 course_id: courses[2].id
               })
 inscriptions << Inscription.create!({
-                kind: available_kinds[0].to_s,
+                kind: Inscription.kinds["teacher"],
                 user_id: users[2].id,
                 course_id: courses[2].id
               })
