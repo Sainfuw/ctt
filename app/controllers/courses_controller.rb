@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :info, :init_transmission]
+  before_action :set_course, only: [:show, :info, :init_transmission, :get_token]
   before_action :authenticate_user!, except: :home
 
   # GET /courses
@@ -27,7 +27,12 @@ class CoursesController < ApplicationController
     else
       @token = response['token']
     end
+  end
 
+  def get_token
+    response = Ov.request("api/tokens", "post", {session: @course.slug})
+    @token = response['token']
+    render json: @token.to_json
   end
 
   # GET /courses/new

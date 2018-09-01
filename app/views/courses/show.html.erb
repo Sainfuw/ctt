@@ -11,8 +11,40 @@
 <%= link_to 'Back', courses_path %>
 
 <div id="video-container">
-
+<input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
 <script>
+
+function stream_with_new_token(source){
+    $.getJSON("<%= get_token_course_path %>").done(function(data){
+        stream(source, data)
+    });
+}
+
+function stream(source, token){
+    if (token == undefined){
+        token = "<%= raw @token %>"
+    }
+     session.connect(token, { clientData: "<%= current_user.email %>" })
+    .then(() => {
+        if (<%= @teacher %> == true){
+            let config = {
+                audioSource: undefined, // The source of audio. If undefined default microphone
+                videoSource: source, // The source of video. If undefined default webcam
+                publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+                resolution: '640x480',  // The resolution of your video
+                frameRate: 30,          // The frame rate of your video
+                insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
+                mirror: false           // Whether to mirror your local video or not
+            }
+            let publisher = OV.initPublisher('video-container', config)
+            session.publish(publisher);
+        };
+    }).catch(error => {
+      console.log("There was an error connecting to the session:", error.code, error.message);
+  })
+}
+
 var OV = new OpenVidu();
 var session = OV.initSession();
 
@@ -37,27 +69,7 @@ session.on('streamDestroyed', event => {
     //removeUserData(event.stream.connection);
 });
 
-session.connect("<%= raw @token %>", { clientData: "<%= current_user.email %>" })
-    .then(() => {
-        if (<%= @teacher %> == true){
-            let config = {
-                audioSource: undefined, // The source of audio. If undefined default microphone
-                videoSource: "screen", // The source of video. If undefined default webcam
-                publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: true,     // Whether you want to start publishing with your video enabled or not
-                resolution: '640x480',  // The resolution of your video
-                frameRate: 30,          // The frame rate of your video
-                insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
-                mirror: false           // Whether to mirror your local video or not
-            }
-            let publisher = OV.initPublisher('video-container', config)
-            session.publish(publisher);
-        };
-    }).catch(error => {
-      console.log("There was an error connecting to the session:", error.code, error.message);
+stream(undefined);
 
-  })
-
-
-
+$()
 </script>

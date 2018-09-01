@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'courses/home'
-  get 'course/:id/info', to: 'courses#info', as: 'course_info'
   resources :courses, only: [:index, :show] do
     member do 
       get :init_transmission
+      get :get_token
+      get :info
     end
   end
   get 'inscriptions/courses'

@@ -16,8 +16,8 @@
               <td><%= course.name %></td>
               <td><%= course.category %></td>
               <td> <%= link_to 'Transmitir', init_transmission_course_path(course) %> </td>
-              <td><%= link_to 'Mostrar', course_info_path(course.id), class: 'btn btn-primary btn-block' %></td>
-              <td><%= link_to 'Inscribirme', inscription_new_path(course.id), class: 'btn btn-primary btn-block' %></td>
+              <td><%= link_to 'Mostrar', info_course_path(course), class: 'btn btn-primary btn-block' %></td>
+              <td><%= link_to 'Inscribirme', inscription_new_path(course), class: 'btn btn-primary btn-block' %></td>
             </tr>
           <% end %>
         </tbody>
