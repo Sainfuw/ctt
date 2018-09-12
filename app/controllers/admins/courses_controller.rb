@@ -18,7 +18,9 @@ class Admins::CoursesController < ApplicationController
   end
 
   def show
-    @list_course = Inscription.where("course_id = ?", @course.id)
+    @profesor = Inscription.where("course_id = ? and kind = ?", @course.id, 0)
+    @asistants = Inscription.where("course_id = ? and kind = ?", @course.id, 2)
+    @students = Inscription.where("course_id = ? and kind = ?", @course.id, 1)
   end
 
   # POST /courses

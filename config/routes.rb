@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   namespace :admins do
     resources :users, except: :new
-    resources :courses #, except: [:create]
-    #post 'courses', to: 'courses#create', as: 'course'
-    resources :inscriptions, only: [:index, :edit, :update]
+    resources :courses
+    resources :inscriptions, only: [:index, :edit, :update, :destroy]
   end
   resources :admins, only: :index
   devise_for :users
@@ -16,8 +15,12 @@ Rails.application.routes.draw do
       get :info
     end
   end
-  get 'inscriptions/courses'
-  get 'inscription/:id', to: 'inscriptions#new', as: 'inscription_new'
+
+  resources :inscriptions, only: :create do
+    collection do
+      get :courses
+    end
+  end
   root 'courses#home'
 
   

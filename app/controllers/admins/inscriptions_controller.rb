@@ -1,5 +1,5 @@
 class Admins::InscriptionsController < ApplicationController
-  before_action :set_inscription, only: [:edit, :update]
+  before_action :set_inscription, only: [:edit, :update, :destroy]
   before_action :admin?
 
   def index
@@ -13,6 +13,11 @@ class Admins::InscriptionsController < ApplicationController
   def update
     @inscription.update(inscription_params)
     redirect_to admins_users_path, notice: 'Inscription was successfully updated.'
+  end
+
+  def destroy
+    @inscription.destroy
+    redirect_to admins_course_path(Course.find(@inscription.course_id)), notice: 'Usuario removido satisfactoriamente del curso'
   end
 
   private

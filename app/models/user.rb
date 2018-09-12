@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :inscriptions
+  has_many :courses, through: :inscriptions
 
   validates_presence_of :email, :username, :firstname, :lastname
 

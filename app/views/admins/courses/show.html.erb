@@ -1,8 +1,54 @@
 <div class="container air">
-  <%= @course.name %><br>
-  <%= @course.category %><br>
-  <%= @course.created_at %><br>
-  <% @list_course.each do |user| %>
-    <%= User.find(user.user_id).email %>-<%= user.kind %><br>
-  <% end %>
+  <p>Curso: <%= @course.name %></p>
+  <p>Categoria: <%= @course.category %></p>
+  <p>Fecha de inicio: <%= @course.created_at %></p>
+
+  <table class="table table-bordered">
+    <tr><th colspan="4"><h4 class="text-center mt-2">Profesor</h3></th></tr>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Correo</th>
+      <th></th>
+    </tr>
+    <% @profesor.each do |i| %>
+      <tr>
+        <td><%= i.user.firstname %></td>
+        <td><%= i.user.lastname %></td>
+        <td><%= i.user.email %></td>
+        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+      </tr>
+    <% end %>
+    <tr><th colspan="4"><h4 class="text-center mt-2">Ayudantes</h3></th></tr>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Correo</th>
+      <th></th>
+    </tr>
+    <% @asistants.each do |i| %>
+      <tr>
+        <td><%= i.user.firstname %></td>
+        <td><%= i.user.lastname %></td>
+        <td><%= i.user.email %></td>
+        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+      </tr>
+    <% end %>
+    <tr><th colspan="4"><h4 class="text-center mt-2">Alumnos</h3></th></tr>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Correo</th>
+      <th></th>
+    </tr>
+    <% @students.each do |i| %>
+      <tr>
+        <td><%= i.user.firstname %></td>
+        <td><%= i.user.lastname %></td>
+        <td><%= i.user.email %></td>
+        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+      </tr>
+    <% end %>
+  </table>
+
 </div>

@@ -23,7 +23,7 @@ class CoursesController < ApplicationController
                   ).any?
     response = Ov.request("api/tokens", "post", {session: @course.slug})
     if response.key?(:error)
-      redirect_to courses_path, alert: "error #{response[:error]}"
+      redirect_to courses_inscriptions_path, alert: "error #{response[:error]}"
     else
       @token = response['token']
     end
@@ -66,14 +66,9 @@ class CoursesController < ApplicationController
   end
 
   def info
-    @list_course = Inscription.where("course_id = ?", @course.id)
-
-    # @profesor_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Profesor")
-    # @profesor = User.find(@profesor_ins[0].user_id)
-    # @ayudantes_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Ayudante")
-    # @ayudantes = @ayudantes_ins.map { |a| User.find(a.user_id) }
-    # @alumnos_ins = Inscription.where("course_id = ? and kind = ?", @course.id, "Alumno")
-    # @alumnos = @alumnos_ins.map { |a| User.find(a.user_id) }
+    @profesor = Inscription.where("course_id = ? and kind = ?", @course.id, 0)
+    @asistants = Inscription.where("course_id = ? and kind = ?", @course.id, 2)
+    @students = Inscription.where("course_id = ? and kind = ?", @course.id, 1)
   end
 
   private
