@@ -5,7 +5,10 @@ Rails.application.routes.draw do
     resources :inscriptions, only: [:index, :edit, :update, :destroy]
   end
   resources :admins, only: :index
-  devise_for :users
+  devise_for :users, controllers: {
+        registrations: 'users/registrations'
+  }
+
 
   get 'courses/home'
   resources :courses, only: [:index, :show] do
