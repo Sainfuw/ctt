@@ -1,4 +1,13 @@
+log/test.log
 db/development.sqlite3
+
+log/development.log
+db/test.sqlite3
+log/development.log
 .byebug_history
 tmp/cache/*
 tmp/pids/*
+
+db/test.sqlite3
+
+log/*

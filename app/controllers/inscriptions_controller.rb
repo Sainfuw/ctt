@@ -2,7 +2,7 @@ class InscriptionsController < ApplicationController
   before_action :authenticate_user!
 
   def courses
-    @courses = Inscription.where(user_id: current_user.id)
+    @inscriptions = Inscription.where(user_id: current_user.id)
   end
 
   def ayudantes
@@ -15,8 +15,19 @@ class InscriptionsController < ApplicationController
     @alumnos = @curso.where(kind: 'Alumno')
   end
 
-  def new
-    @inscription = Inscription.create(user_id: current_user.id, course_id: params[:id], kind: "Alumno")
-    redirect_to root_path, notice: 'Registro al curso completo'
+  def create
+    if helpers.get_inscription(current_user, Course.find(params[:course_id])).nil?
+      @inscription = Inscription.new(user_id: current_user.id, course_id: params[:course_id])
+      @inscription.student!
+      @inscription.save
+      redirect_to root_path, notice: 'Registro al curso completo'
+    else
+      redirect_to root_path, notice: 'Ya estas inscrito en este curso'
+    end
+  end
+
+  private
+  def inscription_params
+    params.require(:inscription).permit(:course_id)
   end
 end

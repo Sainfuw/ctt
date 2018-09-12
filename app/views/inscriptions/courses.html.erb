@@ -10,18 +10,14 @@
         </thead>
 
         <tbody>
-          <% @courses.each do |inscription| %>
+          <% @inscriptions.each do |i| %>
             <tr>
-              <td><%= Course.find(inscription.course_id).name %></td>
+              <td><%= i.course.name %></td>
               <td>
-                <%= link_to 'Ir a Clases', course_path(inscription.course_id), class: 'btn btn-primary' %>
-                <%= link_to 'Informacion', course_info_path(inscription.course_id), class: 'btn btn-primary' %>
-                <% if inscription.kind == "Alumno" %>
-                  <%= link_to 'Mis Notas', root_path, class: 'btn btn-primary' %>
-                <% elsif inscription.kind == "Ayudante" %>
-                  <%= link_to 'Ayudar', root_path, class: 'btn btn-primary' %>
-                <% else %>
-                  <%= link_to 'Calificar', root_path, class: 'btn btn-primary' %>
+                <%= link_to 'Ir a Clases', course_path(i.course_id), class: 'btn btn-primary' %>
+                <%= link_to 'Informacion', info_course_path(i.course_id), class: 'btn btn-primary' %>
+                <% if i.teacher? %>
+                  <%= link_to 'Transmitir', init_transmission_course_path(i.course), class: 'btn btn-primary'  %>
                 <% end %>
               </td>
             </tr>
