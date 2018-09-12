@@ -11,14 +11,16 @@ Rails.application.routes.draw do
   get 'courses/home'
   get 'course/:id/info', to: 'courses#info', as: 'course_info'
   resources :courses, only: [:index, :show] do
-    member do 
+    member do
       get :init_transmission
     end
   end
   get 'inscriptions/courses'
   get 'inscription/:id', to: 'inscriptions#new', as: 'inscription_new'
   root 'courses#home'
+  resources :integrants, only: [:index] do  
+  end
 
-  
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
