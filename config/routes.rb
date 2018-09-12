@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   get 'courses/home'
   resources :courses, only: [:index, :show] do
-    member do 
+    member do
       get :init_transmission
       get :get_token
       get :info
@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     end
   end
   root 'courses#home'
+  resources :integrants, only: [:index] do  
+  end
 
-  
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
