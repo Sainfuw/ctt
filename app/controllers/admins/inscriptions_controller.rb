@@ -12,6 +12,18 @@ class Admins::InscriptionsController < ApplicationController
 
   def update
     @inscription.update(inscription_params)
+
+    if @inscription.save
+
+
+
+      ApplicationMailer.inscripcion_email(@user).deliver
+
+
+    end
+
+
+
     redirect_to admins_users_path, notice: 'Inscription was successfully updated.'
   end
 

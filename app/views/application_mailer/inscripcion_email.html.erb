@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <body>
+    <h1> Hola <%= @user.firstname %>!</h1>
+    <p>
+      Tu inscripción al curso de <%= @inscription.course_id %> ha sido actualizada, en él figuras como <%= @inscription.kind %>. <br>
+    </p>
+    <p>
+      Para ingresar al sitio y ver los cambios ingresa aquí: <%= @url %>.
+    </p>
+    <p>Estamos felices con tu participación </p>
+	<p>¡Ten un buen día!</p>
+  </body>
+
+</html>
