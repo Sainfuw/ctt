@@ -5,7 +5,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
+<title>StreamingOpenVidu</title>
 
 
 <style type="text/css">
@@ -443,7 +443,76 @@ sudo service kurento-media-server restart</code></pre></div>
 
 <p>El resultado es un token que se necesita en el js para unirse a la sesión existente</p>
 
-<p>Actualmente dentro de la vista courses#show está el javascript que usa el token para crear o unirse a la sesión.</p>
+<p>Actualmente dentro de la vista <strong><em>courses#show</em></strong> está el javascript que usa el token para crear o unirse a la sesión.</p>
+
+<p>Acá se definen dos variables necesarias para hacer uso de OpenVidu:</p>
+
+<div><pre><code class="language-none">var OV = new OpenVidu();</code></pre></div>
+
+<div><pre><code class="language-none">var session = OV.initSession();</code></pre></div>
+
+<p><strong><em>OV</em></strong> será nuestro objeto OpenVidu y <strong><em>session</em></strong> será la video llamada a la cual nos conectaremos. El proceso consiste en crear el objeto OpenVidu e iniciar una sesión con él.</p>
+
+<p>Dentro de esta vista se definieron dos funciones javascript: <strong><em>stream</em></strong> y <strong><em>stream<em>with</em>new_token</em></strong>.</p>
+
+<div><pre><code class="language-none">function stream_with_new_token(source){
+    $.getJSON(&quot;&lt;%= get_token_course_path %&gt;&quot;).done(function(data){
+        stream(source, data)
+    });
+}</code></pre></div>
+
+<p>Además, se creó un botón que llama a la función <strong><em>stream<em>with</em>new_token</em></strong>, función que sirve para obtener el token de OpenVidu que es necesario para conectarse a la sesión, para esto se llama a  <strong><em>get<em>token</em>course_path</em></strong> que nos lleva al controlador y método: <strong><em>courses#get_token</em></strong>. Dentro de este metodo se definió el request a *<strong>“api/tokens”</strong> que nos devuelve el token y lo guardamos en la variable <strong><em>@token</em></strong>. Con este token iniciamos un streaming usando la función stream:</p>
+
+<div><pre><code class="language-none">function stream(source, token){
+    if (token == undefined){
+        token = &quot;&lt;%= raw @token %&gt;&quot;
+    }
+     session.connect(token, { clientData: &quot;&lt;%= current_user.email %&gt;&quot; })
+    .then(() =&gt; {
+        if (&lt;%= @teacher %&gt; == true){
+            let config = {
+                audioSource: undefined, // The source of audio. If undefined default microphone
+                videoSource: source, // The source of video. If undefined default webcam
+                publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+                resolution: &#39;640x480&#39;,  // The resolution of your video
+                frameRate: 30,          // The frame rate of your video
+                insertMode: &#39;APPEND&#39;,   // How the video is inserted in the target element &#39;video-container&#39;
+                mirror: false           // Whether to mirror your local video or not
+            }
+            let publisher = OV.initPublisher(&#39;video-container&#39;, config)
+            session.publish(publisher);
+        };
+    }).catch(error =&gt; {
+      console.log(&quot;There was an error connecting to the session:&quot;, error.code, error.message);
+  })
+}</code></pre></div>
+
+<p>En la función stream se definen las características de la transmisión de video, audio y además, si el usuario es profesor (@teacher), podrá comenzar a transmitir una sesión.</p>
+
+<div><pre><code class="language-none">let publisher = OV.initPublisher(&#39;video-container&#39;, config)
+                session.publish(publisher);</code></pre></div>
+
+<p>El código restante dentro de la vista <strong><em>show</em></strong> corresponde a la lógica para suscribirse a la transmisión y para terminar de recibir la transmisión cuando se ha destruido una transmisión:</p>
+
+<div><pre><code class="language-none">session.on(&#39;streamCreated&#39;, event =&gt; {
+
+    // Subscribe to the Stream to receive it. HTML video will be appended to element with &#39;video-container&#39; id
+    var subscriber = session.subscribe(event.stream, &#39;video-container&#39;);
+
+    // When the HTML video has been appended to DOM...
+    subscriber.on(&#39;videoElementCreated&#39;, event =&gt; {
+        // Add a new &lt;p&gt; element for the user&#39;s nickname just below its video
+    //    appendUserData(event.element, subscriber.stream.connection);
+    });
+});
+
+// On every Stream destroyed...
+session.on(&#39;streamDestroyed&#39;, event =&gt; {
+
+    // Delete the HTML element with the user&#39;s nickname. HTML videos are automatically removed from DOM
+    //removeUserData(event.stream.connection);
+});</code></pre></div>
 
 <h2 id="toc_13">Reglas importantes:</h2>
 
