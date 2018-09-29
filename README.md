@@ -1,27 +1,3 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 
 ## OpenVidu
 
@@ -72,3 +48,54 @@ Entro como profesor y no hay sesión, veo el botón y la creo
 	Hay que notificar a los alumnos que ya están en el sala
 	El alumno que entra a la sala recibe el token y se une a la sesión
 Entro como profesor y hay session, me uno
+
+# Instalación de OpenVidu
+
+## Instalar un http server (para realizar los desafíos de certbot)
+
+apt install npm
+npm install -g http-server
+levantar el server http-server -p 80
+
+## Instalación de Certbot (revisar https://certbot.eff.org/lets-encrypt)
+
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot 
+
+## Autorización del certificado
+
+sudo certbot certonly --webroot -w . -d desafiostreaming.tk
+
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/desafiostreaming.tk/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/desafiostreaming.tk/privkey.pem
+   Your cert will expire on 2018-11-27. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+## Resultado de la autorización
+
+Los certificados (full chain y privacy) quedarán /etc/letsencrypt/live/
+
+Ejemplo:
+
+/etc/letsencrypt/live/desafiostreaming.tk/fullchain.pem
+/etc/letsencrypt/live/desafiostreaming.tk/privkey.pem
+
+## Generando el certificado en pkcs12 para openvidu
+
+openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out h.p12 \
+-name desafiostreaming.tk -passin pass:password1234 -passout pass:password1234
+
+keytool -importkeystore -srckeystore h.p12 -srcstoretype PKCS12 \
+-srcstorepass password1234 -alias desafiostreaming.tk -deststorepass password1234 \
+-destkeypass password1234 -destkeystore h.jks
+
+java -Dopenvidu.secret=YOUR_SECRET -Dserver.ssl.key-store=/etc/letsencrypt/live/desafiostreaming.tk/h.jks -Dserver.ssl.key-store-password=password1234 -Dserver.ssl.key-alias=desafiostreaming.tk -Dopenvidu.publicurl=https://desafiostreaming.tk:4443 -jar openvidu-server-2.4.0.jar 
+
