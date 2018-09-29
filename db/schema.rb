@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20180928230436) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "user_id"
+    t.bigint "course_id"
+    t.bigint "user_id"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -60,4 +60,6 @@ ActiveRecord::Schema.define(version: 20180928230436) do
 
   add_foreign_key "inscriptions", "courses"
   add_foreign_key "inscriptions", "users"
+  add_foreign_key "messages", "courses"
+  add_foreign_key "messages", "users"
 end
