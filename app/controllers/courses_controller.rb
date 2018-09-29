@@ -10,12 +10,13 @@ class CoursesController < ApplicationController
 
   def init_transmission
     response = Ov.request("api/sessions", "post", {customSessionId: @course.slug})
-    redirect_to courses_path
+    redirect_to @course
   end
   # GET /courses/1
   # GET /courses/1.json
   def show
     # Subscribe to room
+    @messages = @course.messages.order(created_at: :desc).limit(40).reverse
     @teacher = Inscription
                 .where(user: current_user, 
                     course: @course, 

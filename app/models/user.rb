@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :inscriptions
   has_many :courses, through: :inscriptions
+  has_many :messages
 
   validates_presence_of :email, :username, :firstname, :lastname
 

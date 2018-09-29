@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   get 'courses/home'
   resources :courses, only: [:index, :show] do
+    resources :messages
     member do
       get :init_transmission
       get :get_token

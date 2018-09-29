@@ -16,6 +16,7 @@ class InscriptionsController < ApplicationController
   end
 
   def create
+    @course_user = @course.inscriptions.where(user_id: current_user.id).first_or_create
     if helpers.get_inscription(current_user, Course.find(params[:course_id])).nil?
       @inscription = Inscription.new(user_id: current_user.id, course_id: params[:course_id])
       @inscription.student!
@@ -27,6 +28,10 @@ class InscriptionsController < ApplicationController
   end
 
   private
+
+  def set_course
+    @course = Course.find(params[:course_id])
+  end
   def inscription_params
     params.require(:inscription).permit(:course_id)
   end
