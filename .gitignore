@@ -10,3 +10,6 @@ tmp/pids/*
 db/test.sqlite3
 
 log/*
+
+# Ignore application configuration
+/config/application.yml

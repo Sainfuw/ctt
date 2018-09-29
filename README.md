@@ -1,4 +1,28 @@
 
+## Variables de entornos manejadas en figaro 
+
+Figaro es una gema para poder configurar las [variables de ambiente](https://help.ubuntu.com/community/EnvironmentVariables) en un proyecto. Los pasos para instalar figaro:
+
+1. Add Figaro to your Gemfile and bundle install
+
+```
+gem "figaro"
+```
+
+2. Instalar figaro
+
+```
+bundle exec figaro install
+```
+
+3. Las variables de ambiente configuradas se encuentran en config/aplication.yml (no incorporar en el repositorio)
+
+
+## Instalación de Postgres en local y poder crear un rol adecuado para la base de datos
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
+
+
 ## OpenVidu
 
 OpenVidú funciona como una API REST

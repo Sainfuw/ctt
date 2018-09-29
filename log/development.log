@@ -159,3 +159,143 @@ Migrating to AddKindToInscription (20180901020342)
             FROM sqlite_temp_master
             WHERE name='index_users_on_email' AND type='index'
 [0m
+  [1m[35m (0.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "streamingctt"[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (25.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4864179700750475910)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateCourses (20180811055001)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (30.9ms)[0m  [1m[35mCREATE TABLE "courses" ("id" bigserial primary key, "name" character varying, "category" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (3.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180811055001"]]
+  [1m[35m (3.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateUsers (20180811060020)
+  [1m[35m (7.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (16.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180811060020"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateInscriptions (20180811060854)
+  [1m[35m (6.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (19.5ms)[0m  [1m[35mCREATE TABLE "inscriptions" ("id" bigserial primary key, "kind" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180811060854"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserToInscription (20180811061027)
+  [1m[35m (5.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (22.6ms)[0m  [1m[35mALTER TABLE "inscriptions" ADD "user_id" bigint[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_inscriptions_on_user_id" ON "inscriptions"  ("user_id")[0m
+  [1m[35m (11.4ms)[0m  [1m[35mALTER TABLE "inscriptions" ADD CONSTRAINT "fk_rails_900975df55"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180811061027"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCourseToInscription (20180811061142)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "inscriptions" ADD "course_id" bigint[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE  INDEX  "index_inscriptions_on_course_id" ON "inscriptions"  ("course_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "inscriptions" ADD CONSTRAINT "fk_rails_45731cda33"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180811061142"]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFirstnameAndLastnameAndUsernameAndAdminToUser (20180828095441)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "firstname" character varying[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "users" ADD "lastname" character varying[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "users" ADD "username" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "admin" boolean[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180828095441"]]
+  [1m[35m (6.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveKindFromInscription (20180901020240)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.0ms)[0m  [1m[35mALTER TABLE "inscriptions" DROP "kind"[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180901020240"]]
+  [1m[35m (10.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKindToInscription (20180901020342)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "inscriptions" ADD "kind" integer[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180901020342"]]
+  [1m[35m (6.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (5.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-09-28 23:51:58.359426"], ["updated_at", "2018-09-28 23:51:58.359426"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4864179700750475910)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mCourse Load (0.4ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mInscription Load (0.4ms)[0m  [1m[34mSELECT "inscriptions".* FROM "inscriptions"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "courses" ("name", "category", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Full Stack"], ["category", "Desafiolatam"], ["created_at", "2018-09-28 23:52:03.081903"], ["updated_at", "2018-09-28 23:52:03.081903"]]
+  [1m[35m (6.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "category", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Front End"], ["category", "Desafiolatam"], ["created_at", "2018-09-28 23:52:03.090708"], ["updated_at", "2018-09-28 23:52:03.090708"]]
+  [1m[35m (5.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "category", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Back End"], ["category", "Desafiolatam"], ["created_at", "2018-09-28 23:52:03.097688"], ["updated_at", "2018-09-28 23:52:03.097688"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "gonzalo@desafiolatam.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "firstname", "lastname", "username") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["email", "gonzalo@desafiolatam.com"], ["encrypted_password", "$2a$11$BHZbPhBPAcFLqEYHjZE9nOyUO.6ULKu.wWErQA4YIh371wwhtZNL6"], ["created_at", "2018-09-28 23:52:03.264575"], ["updated_at", "2018-09-28 23:52:03.264575"], ["firstname", "Gonzalo"], ["lastname", "Desafio LATAM"], ["username", "GonzDefLatam"]]
+  [1m[35m (6.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "sainfuw@aol.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "firstname", "lastname", "username") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["email", "sainfuw@aol.com"], ["encrypted_password", "$2a$11$XEA.7c0C.cpAsKk8od7KvuVPwnEDNqPeUIR6/UoJH3eK4dlAmQxTC"], ["created_at", "2018-09-28 23:52:03.407820"], ["updated_at", "2018-09-28 23:52:03.407820"], ["firstname", "Emilio"], ["lastname", "Navarro"], ["username", "sainfuw"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "josetomascodecido@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "firstname", "lastname", "username") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["email", "josetomascodecido@gmail.com"], ["encrypted_password", "$2a$11$WFblHGWFT/saiaJmAVXWb.7ibPO1XN6RpTXOeUR6yRdGOlcPAL4ti"], ["created_at", "2018-09-28 23:52:03.543323"], ["updated_at", "2018-09-28 23:52:03.543323"], ["firstname", "Jose Tomas"], ["lastname", "Codecido"], ["username", "Toto"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "admin@admin.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "firstname", "lastname", "username", "admin") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["email", "admin@admin.com"], ["encrypted_password", "$2a$11$y6gUTtRFlpMzT.AcrYb4/uaaGu9N4n9/PnaAfmYgpzG7fsEz3WhEi"], ["created_at", "2018-09-28 23:52:03.680077"], ["updated_at", "2018-09-28 23:52:03.680077"], ["firstname", "Admin"], ["lastname", "Admin"], ["username", "Admin"], ["admin", "t"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (27.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (24.3ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.732617"], ["updated_at", "2018-09-28 23:52:03.732617"], ["user_id", 1], ["course_id", 1], ["kind", 0]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.761479"], ["updated_at", "2018-09-28 23:52:03.761479"], ["user_id", 2], ["course_id", 1], ["kind", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.766222"], ["updated_at", "2018-09-28 23:52:03.766222"], ["user_id", 3], ["course_id", 1], ["kind", 2]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.3ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.770170"], ["updated_at", "2018-09-28 23:52:03.770170"], ["user_id", 1], ["course_id", 2], ["kind", 2]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.774054"], ["updated_at", "2018-09-28 23:52:03.774054"], ["user_id", 2], ["course_id", 2], ["kind", 0]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.778079"], ["updated_at", "2018-09-28 23:52:03.778079"], ["user_id", 3], ["course_id", 2], ["kind", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.782030"], ["updated_at", "2018-09-28 23:52:03.782030"], ["user_id", 1], ["course_id", 3], ["kind", 2]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.785480"], ["updated_at", "2018-09-28 23:52:03.785480"], ["user_id", 2], ["course_id", 3], ["kind", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "inscriptions" ("created_at", "updated_at", "user_id", "course_id", "kind") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["created_at", "2018-09-28 23:52:03.788908"], ["updated_at", "2018-09-28 23:52:03.788908"], ["user_id", 3], ["course_id", 3], ["kind", 0]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
