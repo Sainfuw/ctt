@@ -2,7 +2,7 @@ class Integrant
   include ActiveModel::Model
 
   attr_accessor :name, :last_name, :description, :team 
-  attr_accessor :file_name
+  attr_accessor :path
 
   def full_name
     "#{self.name} #{self.last_name}"
@@ -16,8 +16,8 @@ class Integrant
 
   def self.front_team
     integrants = []
-
-    integrants << Integrant.new({name:"José Tomás",last_name:"Codecido",description:"Fullstack G13",file_name:"jsc_front.png"})
+    base_path = 
+    integrants << Integrant.new({name:"José Tomás",last_name:"Codecido",description:"Fullstack G13", path: Rails.root.join('public','integrants','front','jsc_front.png') })
 
     integrants
   end
