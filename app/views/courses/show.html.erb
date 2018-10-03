@@ -13,13 +13,15 @@
 <div id="video-container">
 <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
 </div>
-<div data-behavior='messages' data-course-id='<%= @course.id %>'>
+<div id="chat" data-behavior='messages' data-course-id='<%= @course.id %>'>
   <%= render @messages %>
 </div>
 <br>
 <%= form_for [@course, Message.new] do |f| %>
   <%= f.text_area :body, rows: 1, class: 'form-control', autofocus: true %>
 <% end %>
+<div id="onlineusers">
+</div>
 <script>
 
 function stream_with_new_token(source){

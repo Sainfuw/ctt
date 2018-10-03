@@ -16,13 +16,13 @@ class InscriptionsController < ApplicationController
   end
 
   def create
-    @course_user = @course.inscriptions.where(user_id: current_user.id).first_or_create
     if helpers.get_inscription(current_user, Course.find(params[:course_id])).nil?
       @inscription = Inscription.new(user_id: current_user.id, course_id: params[:course_id])
       @inscription.student!
       @inscription.save
       redirect_to root_path, notice: 'Registro al curso completo'
     else
+      @course_user = @course.inscriptions.where(user_id: current_user.id).first_or_create
       redirect_to root_path, notice: 'Ya estas inscrito en este curso'
     end
   end
