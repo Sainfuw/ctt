@@ -13,4 +13,6 @@ $(document).on("turbolinks:load", function() {
     App.courses.send_message(course_id, body.val());
     body.val("");
   });
+  setInterval(function () {
+  }, 30000);
 });
