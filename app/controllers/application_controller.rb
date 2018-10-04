@@ -9,7 +9,11 @@ class ApplicationController < ActionController::Base
   protected
     def after_sign_in_path_for(resource)
     # return the path based on resource
+    if current_user.admin
+      admins_path
+    else
 
       courses_inscriptions_path
+    end
     end
 end

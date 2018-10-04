@@ -37,8 +37,11 @@
  .closebtn:hover {
      color: black;
  }
+ .margen{
+   margin-top: 50px;
+ }
 #chat {
-  height:100px;
+  height:80px;
   overflow-y: scroll;
   background-color: white;
 
@@ -65,10 +68,13 @@
 #admins{
   margin-top: 180px;
 }
+#home{
+  background-color: #C9CFD3;
+}
 .edit{
   color: white
 }
-#chat {
-  height:80px;
-  overflow-y: scroll;
+
+.air{
+  margin-bottom: 40px;
 }
