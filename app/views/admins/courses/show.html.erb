@@ -2,53 +2,63 @@
   <p>Curso: <%= @course.name %></p>
   <p>Categoria: <%= @course.category %></p>
   <p>Fecha de inicio: <%= @course.created_at %></p>
+  <%= link_to 'Volver', admins_courses_path, class: 'btn btn-secondary btn-block' %>
 
-  <table class="table table-bordered">
-    <tr><th colspan="4"><h4 class="text-center mt-2">Profesor</h3></th></tr>
+
+  <table class="table table-bordered tablestyle">
+    <thead class="thead-dark">
+      <tr>
+        <th colspan="4">
+          <h4 class="text-center mt-2">Profesor</h4>
+        </th>
+      </tr>
+    </thead>
+
     <tr>
       <th>Nombre</th>
       <th>Apellidos</th>
       <th>Correo</th>
       <th></th>
     </tr>
-    <% @profesor.each do |i| %>
+    <tbody>
+      <% @profesor.each do |i| %>
+        <tr>
+          <td><%= i.user.firstname %></td>
+          <td><%= i.user.lastname %></td>
+          <td><%= i.user.email %></td>
+          <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+        </tr>
+      <% end %>
+      <tr><th colspan="4"><h4 class="text-center mt-2">Ayudantes</h3></th></tr>
       <tr>
-        <td><%= i.user.firstname %></td>
-        <td><%= i.user.lastname %></td>
-        <td><%= i.user.email %></td>
-        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th></th>
       </tr>
-    <% end %>
-    <tr><th colspan="4"><h4 class="text-center mt-2">Ayudantes</h3></th></tr>
-    <tr>
-      <th>Nombre</th>
-      <th>Apellidos</th>
-      <th>Correo</th>
-      <th></th>
-    </tr>
-    <% @asistants.each do |i| %>
+      <% @asistants.each do |i| %>
+        <tr>
+          <td><%= i.user.firstname %></td>
+          <td><%= i.user.lastname %></td>
+          <td><%= i.user.email %></td>
+          <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+        </tr>
+      <% end %>
+      <tr><th colspan="4"><h4 class="text-center mt-2">Alumnos</h3></th></tr>
       <tr>
-        <td><%= i.user.firstname %></td>
-        <td><%= i.user.lastname %></td>
-        <td><%= i.user.email %></td>
-        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th></th>
       </tr>
-    <% end %>
-    <tr><th colspan="4"><h4 class="text-center mt-2">Alumnos</h3></th></tr>
-    <tr>
-      <th>Nombre</th>
-      <th>Apellidos</th>
-      <th>Correo</th>
-      <th></th>
-    </tr>
-    <% @students.each do |i| %>
-      <tr>
-        <td><%= i.user.firstname %></td>
-        <td><%= i.user.lastname %></td>
-        <td><%= i.user.email %></td>
-        <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
-      </tr>
-    <% end %>
+      <% @students.each do |i| %>
+        <tr>
+          <td><%= i.user.firstname %></td>
+          <td><%= i.user.lastname %></td>
+          <td><%= i.user.email %></td>
+          <td style="width: 50px"><a href="<%= admins_inscription_path(i) %>" data-method="DELETE" class="btn btn-danger btn-block">X</a></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-
 </div>

@@ -1,86 +1,93 @@
-<p>
-  <strong>Name:</strong>
-  <%= @course.name %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @course.category %>
-</p>
-
-<%= link_to 'Back', courses_path %>
-
-<div id="video-container">
-<input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
-</div>
 <div class="container">
-    <div id="chat" style="overflow:auto" data-behavior='messages' data-course-id='<%= @course.id %>'>
-        <%= render @messages %>
-    </div>
+  <p>
+    <strong>Course Name:</strong>
+    <%= @course.name %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= @course.category %>
+  </p>
+
+    <%= link_to 'Back', courses_path,  class: 'btn btn-secondary '%>
+
+  <div class="col-md-6 offset-md-3"id="video-container">
+  <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
+
+  </div>
+  <div class="container ">
+      <div id="chat" class="rounded border-secondary" style="overflow:auto" data-behavior='messages' data-course-id='<%= @course.id %>'>
+          <%= render @messages %>
+      </div>
+      <%= form_for [@course, Message.new] do |f| %>
+        <%= f.text_area :body, rows: 1, class: 'form-control', autofocus: true %>
+      <% end %>
+  </div>
+  <br>
+
+
+  <div id="onlineusers">
+  </div>
+
+  <script>
+  function stream_with_new_token(source){
+      $.getJSON("<%= get_token_course_path %>").done(function(data){
+          stream(source, data)
+      });
+  }
+
+  function stream(source, token){
+      if (token == undefined){
+          token = "<%= raw @token %>"
+      }
+       session.connect(token, { clientData: "<%= current_user.email %>" })
+      .then(() => {
+          if (<%= @teacher %> == true){
+              let config = {
+                  audioSource: undefined, // The source of audio. If undefined default microphone
+                  videoSource: source, // The source of video. If undefined default webcam
+                  publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+                  publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+                  resolution: '640x480',  // The resolution of your video
+                  frameRate: 30,          // The frame rate of your video
+                  insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
+                  mirror: false           // Whether to mirror your local video or not
+              }
+              let publisher = OV.initPublisher('video-container', config)
+              session.publish(publisher);
+          };
+      }).catch(error => {
+        console.log("There was an error connecting to the session:", error.code, error.message);
+    })
+  }
+
+  var OV = new OpenVidu();
+  var session = OV.initSession();
+
+
+  // On every new Stream received...
+  session.on('streamCreated', event => {
+
+      // Subscribe to the Stream to receive it. HTML video will be appended to element with 'video-container' id
+      var subscriber = session.subscribe(event.stream, 'video-container');
+
+      // When the HTML video has been appended to DOM...
+      subscriber.on('videoElementCreated', event => {
+          // Add a new <p> element for the user's nickname just below its video
+      //    appendUserData(event.element, subscriber.stream.connection);
+      });
+  });
+
+  // On every Stream destroyed...
+  session.on('streamDestroyed', event => {
+
+      // Delete the HTML element with the user's nickname. HTML videos are automatically removed from DOM
+      //removeUserData(event.stream.connection);
+  });
+
+  stream(undefined);
+
+  $()
+  </script>
+
 </div>
-<br>
-<%= form_for [@course, Message.new] do |f| %>
-  <%= f.text_area :body, rows: 1, class: 'form-control', autofocus: true %>
-<% end %>
-<div id="onlineusers">
-</div>
-<script>
-function stream_with_new_token(source){
-    $.getJSON("<%= get_token_course_path %>").done(function(data){
-        stream(source, data)
-    });
-}
-
-function stream(source, token){
-    if (token == undefined){
-        token = "<%= raw @token %>"
-    }
-     session.connect(token, { clientData: "<%= current_user.email %>" })
-    .then(() => {
-        if (<%= @teacher %> == true){
-            let config = {
-                audioSource: undefined, // The source of audio. If undefined default microphone
-                videoSource: source, // The source of video. If undefined default webcam
-                publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: true,     // Whether you want to start publishing with your video enabled or not
-                resolution: '640x480',  // The resolution of your video
-                frameRate: 30,          // The frame rate of your video
-                insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
-                mirror: false           // Whether to mirror your local video or not
-            }
-            let publisher = OV.initPublisher('video-container', config)
-            session.publish(publisher);
-        };
-    }).catch(error => {
-      console.log("There was an error connecting to the session:", error.code, error.message);
-  })
-}
-
-var OV = new OpenVidu();
-var session = OV.initSession();
-
-
-// On every new Stream received...
-session.on('streamCreated', event => {
-
-    // Subscribe to the Stream to receive it. HTML video will be appended to element with 'video-container' id
-    var subscriber = session.subscribe(event.stream, 'video-container');
-
-    // When the HTML video has been appended to DOM...
-    subscriber.on('videoElementCreated', event => {
-        // Add a new <p> element for the user's nickname just below its video
-    //    appendUserData(event.element, subscriber.stream.connection);
-    });
-});
-
-// On every Stream destroyed...
-session.on('streamDestroyed', event => {
-
-    // Delete the HTML element with the user's nickname. HTML videos are automatically removed from DOM
-    //removeUserData(event.stream.connection);
-});
-
-stream(undefined);
-
-$()
-</script>

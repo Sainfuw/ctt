@@ -40,6 +40,8 @@
 #chat {
   height:100px;
   overflow-y: scroll;
+  background-color: white;
+
 }
 #login{
   background-color: #343A40;
@@ -59,4 +61,10 @@
 .tablestyle{
   margin-top: 60px;
   background-color: white;
+}
+#admins{
+  margin-top: 180px;
+}
+.edit{
+  color: white
 }

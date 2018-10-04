@@ -1,9 +1,9 @@
 <div class="container air">
   <h1 class="text-center">Users</h1>
-  <table class="table table-bordered mx-auto">
-    <thead>
+  <table class="table table-bordered mx-auto tablestyle">
+    <thead class="thead-dark">
       <tr>
-        <th>Correo</th>
+        <th class="text-center">Correo</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -19,4 +19,6 @@
       <% end %>
     </tbody>
   </table>
+  <%= link_to 'Volver', admins_path, class: 'btn btn-secondary btn-block' %>
+
 </div>

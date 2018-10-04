@@ -1,6 +1,6 @@
 <div class="container air">
-  <h1 class="text-center">Cursos</h1>
-  <table class="table table-bordered mx-auto">
+  <h1 class="text-center" style="color:white">Cursos</h1>
+  <table class="table table-bordered mx-auto tablestyle">
     <thead>
       <tr>
         <th>Name</th>
@@ -22,4 +22,6 @@
     </tbody>
   </table>
   <%= link_to 'Crear nuevo curso', new_admins_course_path, class: 'btn btn-primary' %>
+  <%= link_to 'Volver', admins_path, class: 'btn btn-secondary  '  %>
+
 </div>
