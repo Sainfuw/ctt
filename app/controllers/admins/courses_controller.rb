@@ -36,7 +36,7 @@ class Admins::CoursesController < ApplicationController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
-    Inscription.create(user_id: params[:course][:profesor], course_id: @course.id, kind: "Profesor")
+    Inscription.create(user_id: params[:course][:profesor], course_id: @course.id, kind: :teacher)
   end
 
   # PATCH/PUT /courses/1
