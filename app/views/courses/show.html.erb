@@ -1,20 +1,22 @@
 <div class="container">
-  <p>
-    <strong>Course Name:</strong>
-    <%= @course.name %>
-  </p>
+  <div style="color: white; margin-top: 100px;">
+    <h2>
+      <strong>Curso:</strong>
+      <%= @course.name %>
+    </h2>
 
-  <p>
-    <strong>Category:</strong>
-    <%= @course.category %>
-  </p>
-
-    <%= link_to 'Back', courses_path,  class: 'btn btn-secondary '%>
+    <p>
+      <strong>Categoría:</strong>
+      <%= @course.category %>
+    </p>
+  </div>
+    <%= link_to 'Volver', courses_path,  class: 'btn btn-secondary '%>
 
   <div class="col-md-6 offset-md-3"id="video-container">
-  <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
-
+ <!-- <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
+-->
   </div>
+  <br>
   <div class="container ">
       <div id="chat" class="rounded border-secondary" style="overflow:auto" data-behavior='messages' data-course-id='<%= @course.id %>'>
           <%= render @messages %>
@@ -24,11 +26,11 @@
       <% end %>
   </div>
   <br>
-
-
-  <div id="onlineusers">
+  <div style="color: white; margin-bottom: 150px; ">
+    <h4>Usuarios Conectados:</h4>
+    <div id="onlineusers">
+    </div>
   </div>
-
   <script>
   function stream_with_new_token(source){
       $.getJSON("<%= get_token_course_path %>").done(function(data){
