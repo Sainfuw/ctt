@@ -1,38 +1,38 @@
 <div class="" id="registration">
   <div class="row ">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
+
+    <div class="col-md-4 mx-auto">
       <div class="row jumbotron"id="registro">
-        <div class="container" >
+        <div class="" >
           <h3>FORMULARIO REGISTRO</h3>
           <div class="row">
-            <div class="col-lg-6">
-              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <div class="col-lg-12">
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'form') do |f| %>
                 <%= devise_error_messages! %>
 
                 <div class="field">
                   <%= f.label :firstname %><br />
-                  <%= f.text_field :firstname, autofocus: true %>
+                  <%= f.text_field :firstname, autofocus: true, class: 'form-control' %>
                 </div>
 
-                <div class="field">
+                <div class="field ">
                   <%= f.label :lastname %><br />
-                  <%= f.text_field :lastname %>
+                  <%= f.text_field :lastname, class: 'form-control' %>
                 </div>
 
                 <div class="field">
                   <%= f.label :username %><br />
-                  <%= f.text_field :username %>
+                  <%= f.text_field :username, class: 'form-control' %>
                 </div>
 
                 <div class="field">
                   <%= f.label :email %><br />
-                  <%= f.email_field :email %>
+                  <%= f.email_field :email, class: 'form-control' %>
                 </div>
 
                 <div class="field">
                   <%= f.label :Confirm_email %><br />
-                  <%= f.email_field :email, autocomplete: "email" %>
+                  <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
                 </div>
 
 
@@ -42,18 +42,18 @@
                   <% if @minimum_password_length %>
                   <em>(<%= @minimum_password_length %> characters minimum)</em>
                   <% end %><br />
-                  <%= f.password_field :password, autocomplete: "new-password" %>
+                  <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
                 </div>
 
 
                 <div class="field">
                   <%= f.label :password_confirmation %><br />
-                  <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
                 </div>
 
                 <div class="actions">
                   <br>
-                  <%= f.submit "Sign up" %>
+                  <%= f.submit "Sign up", class: 'btn btn-primary' %>
                 </div>
               <% end %>
             </div>
