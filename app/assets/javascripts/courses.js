@@ -12,9 +12,6 @@ $(document).on("turbolinks:load", function() {
     body = $("#message_body");
     App.courses.send_message(course_id, body.val());
     body.val("");
-    room = $('#chat');
-    height = room[0].scrollHeight;
-    room.scrollTop(height);
   });
   setInterval(refreshPartial, 3000);
   function refreshPartial() {
