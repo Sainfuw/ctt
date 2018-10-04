@@ -61,6 +61,12 @@
     })
   }
 
+  $(function chat(room) {
+    room = $('#chat');
+    height = room[0].scrollHeight;
+    room.scrollTop(height);
+  });
+
   var OV = new OpenVidu();
   var session = OV.initSession();
 

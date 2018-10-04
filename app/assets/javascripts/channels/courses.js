@@ -5,6 +5,9 @@ App.courses = App.cable.subscriptions.create("CoursesChannel", {
     var active_course = $("[data-behavior='messages'][data-course-id='" + data.course_id + "']");
     if (active_course.length > 0) {
       active_course.append(data.message);
+      room = $('#chat');
+      height = room[0].scrollHeight;
+      room.scrollTop(height);
     } else {
       $("[data-behavior='course-link'][data-course-id='" + data.course_id + "']").css("font-weight", "bold");
     }
