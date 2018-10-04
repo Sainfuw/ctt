@@ -13,3 +13,4 @@ log/*
 
 # Ignore application configuration
 /config/application.yml
+dumb.rdb
