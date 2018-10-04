@@ -66,6 +66,13 @@ class CoursesController < ApplicationController
   def home
   end
 
+  def onlineusers
+  @data = Online.all
+  respond_to do |format|
+    format.js
+  end
+end
+
   def info
     @profesor = Inscription.where("course_id = ? and kind = ?", @course.id, 0)
     @asistants = Inscription.where("course_id = ? and kind = ?", @course.id, 2)

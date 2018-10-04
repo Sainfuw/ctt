@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :init_transmission
       get :get_token
       get :info
+      get :onlineusers
     end
   end
 

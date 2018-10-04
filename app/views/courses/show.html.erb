@@ -13,8 +13,10 @@
 <div id="video-container">
 <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
 </div>
-<div id="chat" data-behavior='messages' data-course-id='<%= @course.id %>'>
-  <%= render @messages %>
+<div class="container">
+    <div id="chat" style="overflow:auto" data-behavior='messages' data-course-id='<%= @course.id %>'>
+        <%= render @messages %>
+    </div>
 </div>
 <br>
 <%= form_for [@course, Message.new] do |f| %>
@@ -23,7 +25,6 @@
 <div id="onlineusers">
 </div>
 <script>
-
 function stream_with_new_token(source){
     $.getJSON("<%= get_token_course_path %>").done(function(data){
         stream(source, data)

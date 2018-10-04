@@ -5,4 +5,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: 'No puede acceder a la ruta indicada'
     end
   end
+
+  protected
+    def after_sign_in_path_for(resource)
+    # return the path based on resource
+      courses_inscriptions_path
+    end
 end

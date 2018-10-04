@@ -13,6 +13,11 @@ $(document).on("turbolinks:load", function() {
     App.courses.send_message(course_id, body.val());
     body.val("");
   });
-  setInterval(function () {
-  }, 30000);
+  setInterval(refreshPartial, 3000);
+  function refreshPartial() {
+    course_id = $("[data-behavior='messages'").data("course-id");
+    $.ajax({
+      url: "/courses/1/onlineusers"
+    })
+  }
 });
