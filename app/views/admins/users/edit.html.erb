@@ -2,5 +2,11 @@
   <h1 style="color:white">Editing User</h1>
 
   <%= render 'form', user: @user %>
+
 </div>
-<%= link_to 'Back', admins_users_path, class: 'btn btn-secondary ' %>
+<div class="row">
+  <div class="col-md-3 mx-auto">
+    <%= link_to 'Volver', admins_users_path, class: 'btn btn-primary btn-block', style: 'width:255px; margin-left:20px;' %>
+  </div>
+
+</div>

@@ -1,36 +1,44 @@
 <div class="container">
   <div style="color: white; margin-top: 100px;">
-    <h2>
-      <strong>Curso:</strong>
+    <h1 class="text-center">
       <%= @course.name %>
-    </h2>
-
-    <p>
-      <strong>Categoría:</strong>
-      <%= @course.category %>
-    </p>
+    </h1>
   </div>
-    <%= link_to 'Volver', courses_path,  class: 'btn btn-secondary '%>
-
-  <div class="col-md-6 offset-md-3"id="video-container">
- <!-- <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
--->
+  <div class="row">
+    <div class="col-md-8">
+      <div class="col-md-6 mx-auto"id="video-container">
+     <!-- <input type="button" name="screen" value="screen" onclick="stream_with_new_token('screen')">
+    -->
+      </div>
+      <br>
+      <div class="container ">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div style="color: white;">
+        <h4>Usuarios Conectados:</h4>
+        <div id="onlineusers">
+          
+        </div>
+      </div>
+    </div>
   </div>
-  <br>
-  <div class="container ">
+
+  <div class="row">
+    <div class="col-md-9 mx-auto">
       <div id="chat" class="rounded border-secondary" style="overflow:auto" data-behavior='messages' data-course-id='<%= @course.id %>'>
           <%= render @messages %>
+
       </div>
       <%= form_for [@course, Message.new] do |f| %>
         <%= f.text_area :body, rows: 1, class: 'form-control', autofocus: true %>
       <% end %>
-  </div>
-  <br>
-  <div style="color: white; margin-bottom: 150px; ">
-    <h4>Usuarios Conectados:</h4>
-    <div id="onlineusers">
+      <%= link_to 'Salir de clase', courses_path,  class: 'btn btn-primary btn-block mt-2'%>
     </div>
+
   </div>
+
+
   <script>
   function stream_with_new_token(source){
       $.getJSON("<%= get_token_course_path %>").done(function(data){
@@ -50,7 +58,7 @@
                   videoSource: source, // The source of video. If undefined default webcam
                   publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
                   publishVideo: true,     // Whether you want to start publishing with your video enabled or not
-                  resolution: '640x480',  // The resolution of your video
+                  resolution: '540x420',  // The resolution of your video
                   frameRate: 30,          // The frame rate of your video
                   insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
                   mirror: false           // Whether to mirror your local video or not

@@ -1,8 +1,11 @@
 <div class="container">
-  <h1 style="color:white">Nuevo Curso</h1>
+  <h1  class="text-center"style="color:white">Nuevo Curso</h1>
 
   <%= render 'form', course: @course %>
 
-  <%= link_to 'Volver', admins_courses_path, class: 'btn btn-success btn-lg mt-5'  %>
-
+</div>
+<div class="row">
+  <div class="col-md-3 mx-auto">
+    <%= link_to 'Volver', admins_courses_path, class: 'btn btn-primary btn-block', style: 'width:255px; margin-left:20px;'  %>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="container air">
-  <h1 class="text-center">Users</h1>
+  <h1 class="text-center edit">Usuarios</h1>
   <table class="table table-bordered mx-auto tablestyle">
     <thead class="thead-dark">
       <tr>
@@ -12,13 +12,13 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.email %></td>
-          <td><%= link_to 'Show', admins_user_path(user), class: 'btn btn-primary btn-block' %></td>
-          <td><%= link_to 'Edit', edit_admins_user_path(user), class: 'btn btn-primary btn-block' %></td>
-          <td><%= link_to 'Destroy', admins_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-block' %></td>
+          <td><%= link_to 'Mostrar', admins_user_path(user), class: 'btn btn-primary btn-block' %></td>
+          <td><%= link_to 'Editar', edit_admins_user_path(user), class: 'btn btn-primary btn-block' %></td>
+          <td><%= link_to 'Eliminar', admins_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-block' %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'Volver', admins_path, class: 'btn btn-secondary btn-block' %>
+  <%= link_to 'Volver', admins_path, class: 'btn btn-primary btn-block' %>
 
 </div>

@@ -14,6 +14,17 @@
  *= require_tree .
  *= require_self
  */
+ .showcase .showcase-text {
+    padding: 3rem;
+ }
+ .showcase .showcase-img {
+    min-height: 30rem;
+ }
+ @media (min-width: 768px) {
+    .showcase .showcase-text {
+        padding: 7rem;
+    }
+ }
  .alert, .notice {
      padding: 20px;
      color: white;
@@ -41,7 +52,7 @@
    margin-top: 50px;
  }
 #chat {
-  height:80px;
+  height:120px;
   overflow-y: scroll;
   background-color: white;
 
